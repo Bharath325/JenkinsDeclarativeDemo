@@ -1,0 +1,50 @@
+pipeline{
+	agent any
+	stages{
+		
+		stage("One"){
+			steps{
+				echo 'Hello'
+			}
+		stage("Two"){
+			steps{
+				input( 'Continues?')
+			}
+			}
+		stage("Three"){
+				when {
+				    not {
+				        branch "master"
+				    }
+				}
+
+			steps{
+				echo 'Hello'
+			}
+			}
+		stage('Four'){
+			    parallel{
+			    	stage('Unit Test'){
+			    		steps{
+			    			 echo "Running Unit test"
+			    			 	}
+			    			    }
+			    	stage('Integration test') {
+			    		agent {
+			    			  docker{
+			    			          reuseNode false
+			    			          image 'ubuntu'
+			    			           }
+
+			    			             }
+			    			        steps{
+			    			               echo 'Running the integration test'
+			    			              }
+
+
+			    			      }
+			    			}
+		}
+}
+}
+}
