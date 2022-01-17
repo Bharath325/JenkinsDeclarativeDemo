@@ -21,6 +21,7 @@ pipeline{
 
 			steps{
 				echo 'Hello'
+				echo "${GIT_BRANCH}"
 			}
 			}
 		stage('Four'){
